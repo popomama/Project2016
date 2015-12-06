@@ -4,8 +4,9 @@ Bit operations:
 a^(~a) – all 1s
 a & ~0 << n clears right most n bits
 x^x =0
-
- 
+x&(x-1) -- drop the LSB of x
+x^0=x;
+x^(~0)=~x
 
 */
 
