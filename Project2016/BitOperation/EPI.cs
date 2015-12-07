@@ -83,5 +83,30 @@ namespace Project2016.BitOperation
             //    precomputed_reverse[(x & 0xffff) << 48];
             return 0L;
         }
+
+        //closest integers with the same weight
+        //weight = # of bits that have value one in an intger. s[i] denotes the set of integers with weight i
+        //if x is of s[i], find y so that |y-x| is minimum and y is also of s[i]
+        ulong EPI_5_4_closeset_int_same_bits(ulong x)
+        {
+            //1. loop from LSB to left to find the two consecutive bits that are different\
+            int i = 1;
+            while(i<63)
+            {
+
+                //if( (x & (1u<<i)) != (x & (1u<<(i+1))) )   wrong
+                if( ((x>>i) & 1u) != ((x>>(i+1)) & 1u) )
+                {
+                    // now swap the bits between i and i+1
+                    x ^= (1u << i | 1u << (i + 1));
+
+                }
+
+                i++;
+ 
+            }
+
+            return x;
+        }
     }
 }
