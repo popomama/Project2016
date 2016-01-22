@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Project2016.LinkedList;
 
 namespace Project2016
 {
@@ -8,6 +9,7 @@ namespace Project2016
     {
         static void Main(string[] args)
         {
+            TestLL.testEPI701();
         }
     }
 }
