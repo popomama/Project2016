@@ -54,16 +54,7 @@ namespace Project2016.LinkedList
 
         }
 
-        //private void appendNodeAdvance<T>(Node<T> newHeadNode, Node<T> newTailNode, Node<T> linkedListNode)
-        //{
-        //    if (newHeadNode!=null)
-        //        newTailNode.Next  = linkedListNode;
-        //    else
-        //        newHeadNode = linkedListNode;
-            
-        //    newTailNode = linkedListNode;
-
-        //}
+       
 
         //EPI_LL_7_2Given a reference to the head of a singly linked list L, how would you determin  
         // whether L ends in a null  or reaches a cycle of nodes?
@@ -115,6 +106,59 @@ namespace Project2016.LinkedList
 
             
         }
+
+        //EPI_LL_7_3 Write a function that takes a sorted circular singly linked list and a pointer
+        // to an arbitrary node in this linked list, and returns the median of the linked list.
+        public int  EPI_LL_7_3_Median(Node<int> nd) //where T : IComparable<T>, I
+         {
+             Node<int> smallNode;
+             int nodeNumber=0;
+            //step 0: 
+             if (nd.Next == null)
+                 throw new Exception("not a valid circluar LL");
+
+             if (nd.Next == nd)
+                 return nd.Value;
+
+            
+            //step 1: find the length of the circular length
+             Node<int> currentNode = nd;
+             bool isIdentical = true; 
+            do
+             {
+                 currentNode = currentNode.Next;
+                 nodeNumber++;
+
+                 if (currentNode.Value != nd.Value)
+                     isIdentical = false;
+             }
+             while (currentNode != nd);
+
+            if (isIdentical == true)
+                return currentNode.Value;
+
+             //step1: find the node with the smallest value ndFirst
+             smallNode = nd;
+            while (smallNode.Next.Value < smallNode.Value)
+                 smallNode = smallNode.Next;
+            //smallnode now points the largest value, move to the next;
+            smallNode = smallNode.Next;
+
+            //step 3: move length/2 steps from ndFirst
+            //we may use the right shift for the division
+            int movestep = nodeNumber%2 ==0?nodeNumber/2-1:nodeNumber/2;
+            currentNode = smallNode;
+            for (int i = 0; i < movestep; i++)
+                currentNode = currentNode.Next;
+
+            if (nodeNumber % 2 == 0)
+                return (currentNode.Value + currentNode.Next.Value) / 2;
+            else
+                return currentNode.Value;
+
+
+         }
+         
 
     }
 }
