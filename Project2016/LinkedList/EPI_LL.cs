@@ -158,7 +158,51 @@ namespace Project2016.LinkedList
 
 
          }
-         
+
+        //EPI_LL_7_4Let h1 and h2 be the heads of lists L1 and L2. Assume that L1 and L2 are well-formed, that is
+        //each consists of a finite sequence of nodes.(neither one has a cycle.) how would you determine if there exists
+        // a node r reachable from both h1 and h2 by following the next fiedls. If such a node exists, find the node that
+        // appears earliest
+        public Node<T> EPI_LL_7_4_MergedNode<T>(LList<T> L1, LList<T> L2)
+        {
+            //step1: calculate the lenth of L1 and L2
+            int length1 = 0, length2 = 0;
+            Node<T> nd1 = L1.head, nd2 = L2.head;
+            while (nd1 != null)
+            {
+                length1++;
+                nd1 = nd1.Next;
+            }
+
+            while (nd2 != null)
+            {
+                length2++;
+                nd2 = nd2.Next;
+            }
+
+            //step2: move the longer list abs(length1-length2) steps first, so that the remaining of both have the same length
+            if (length1 >= length2)
+            {
+                nd1 = L1.head;
+                for (int i = 0; i < length1 - length2; i++)
+                    nd1 = nd1.Next;
+            }
+            else
+            {
+                nd2 = L2.head;
+                for (int i = 0; i < length2 - length1; i++)
+                    nd2 = nd2.Next;
+            }
+
+            //step3: move both list synchronously, and they will meet at the first merged node if they have common node
+            while (nd2 != null && nd1 != null && nd2 != nd1)
+            {
+                nd1 = nd1.Next;
+                nd2 = nd2.Next;
+            }
+
+            return nd1;
+        }
 
     }
 }
