@@ -159,11 +159,11 @@ namespace Project2016.LinkedList
 
          }
 
-        //EPI_LL_7_4Let h1 and h2 be the heads of lists L1 and L2. Assume that L1 and L2 are well-formed, that is
+        //EPI_LL_7_4 Let h1 and h2 be the heads of lists L1 and L2. Assume that L1 and L2 are well-formed, that is
         //each consists of a finite sequence of nodes.(neither one has a cycle.) how would you determine if there exists
         // a node r reachable from both h1 and h2 by following the next fiedls. If such a node exists, find the node that
         // appears earliest
-        public Node<T> EPI_LL_7_4_MergedNode<T>(LList<T> L1, LList<T> L2)
+        public Node<T> EPI_LL_7_4_OverlapListing<T>(LList<T> L1, LList<T> L2)
         {
             //step1: calculate the lenth of L1 and L2
             int length1 = 0, length2 = 0;
@@ -204,5 +204,48 @@ namespace Project2016.LinkedList
             return nd1;
         }
 
+        //EPI_7_5  Let h1 and h2 be the heads of lists L1 and L2. Assume that L1 and L2 may each or both have a cycle.
+        // if such a node exists, return a node that appears first when traversing the lists. This node may not be unique.
+        // If L1 has a cyccle <n0, n1,..., nk-1,n0> , where n0 is the first node envcountered when traversing L1, then L2
+        // may have the same cycle but a differenct first node.
+         public Node<T> EPI_LL_7_5_OverlapListingCycle<T>(LList<T> L1, LList<T> L2)
+        {
+            //basic idea is to follow EPI_LL_7_4 and EPI_LL_7_2_Cycle
+
+             //step1 determin if L1 and L2 has cycle
+            Node<T> nd1 = EPI_LL_7_2_Cycle<T>(L1);
+            Node<T> nd2 = EPI_LL_7_2_Cycle<T>(L2);
+
+            if (nd1 == null && nd2 == null)// both lists are well-formed, use 7_4 to find the first node that merges
+                return EPI_LL_7_4_OverlapListing<T>(L1, L2);
+
+             
+            if (nd1 != null && nd2 != null)// both lists have the  cycle.
+            {
+                //we need to find out the overlapping node if there is one
+                Node<T> tempNode = nd2; // set the tempnode start at the start of the cycle in L2
+                
+                do
+                {
+                    tempNode = tempNode.Next; //move tempNode until either it hits the start of cycle of L1(i.e. we found the overlapping node).
+                                                // or tempNode hits the start of the cycle in L2 again(i.e. there is no over lap between the two lists.)
+
+                }
+                while (tempNode != nd2 && tempNode != nd1);
+                if (tempNode == nd1)
+                    return nd1;
+                else
+                    return null;
+
+
+            }
+            else// one of the lists has cycle but the other doesn't , so no overlap
+                return null;
+
+
+
+
+    
+        }
     }
 }
