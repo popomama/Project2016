@@ -66,5 +66,84 @@ namespace Project2016.TreeGraph
 
         }
 
+        //Rando Node: You are implementing a binary search tree class from scratch, which , in addition
+        //to insert, find and delete, has a method getRandomNode() which returns a random node from the tree. 
+        //all nodes should be eaually likely to be choen. Design and implement an algorighm for
+        //getRandomNode, and explain how you would implement the rest of the methods.
+        class TreeRandom 
+        {
+            //the idea is to record the size of a specific node
+            // the problem of this implementation is how to adjust the size when we delete a node?
+            TreeNodeWithSize root = null;
+            public int size()
+            {
+                return root == null ? 0 : root.size;
+            }
+
+            public void insertInOrder(int value)
+            {
+                if(root==null)
+                    root = new TreeNodeWithSize(value);
+                else
+                {
+                    root.InsertInOrder(value);
+                }
+            }
+            public  TreeNodeWithSize getRandomNode()
+            {
+                if (root == null)
+                    return null;
+
+                Random r = new Random(size());
+                int i = r.Next() + 1;// get the int from 1 to size()
+                return root.getIthNode(i);
+            }
+        }
+
+        class TreeNodeWithSize
+        {
+            public int size;
+            int Value;
+            public TreeNodeWithSize Left, Right;
+            public TreeNodeWithSize(int val)
+            {
+                this.Value = val;
+                size = 1;
+                Left =Right = null;
+
+            }
+
+            public void InsertInOrder(int val)
+            {
+                if(val<=this.Value)
+                {
+                    if(this.Left ==null)
+                        this.Left  = new TreeNodeWithSize(val);
+                    else
+                        this.Left.InsertInOrder(val);
+                }
+                else
+                {
+                    if(this.Right ==null)
+                        this.Right = new TreeNodeWithSize(val);
+                    else
+                        this.Right.InsertInOrder(val);
+                }
+
+                this.size++;
+            }
+            public TreeNodeWithSize getIthNode(int i)
+            {
+
+                int leftNodeSize = this.Left == null ? 0 : this.Left.size;
+                if (i == leftNodeSize+1)
+                    return this;
+
+                if (i < this.size)
+                    return this.Left.getIthNode(i);
+                else
+                    return this.Right.getIthNode(i - size-1);
+            }
+        }
     }
 }
