@@ -253,6 +253,9 @@ namespace Project2016.TreeGraph
                 availableRunningSum.Add(key, delta);
             }
         }
+
+        //Check Subtree:
+
     }
 
 }
