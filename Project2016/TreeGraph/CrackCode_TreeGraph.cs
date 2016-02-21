@@ -254,10 +254,37 @@ namespace Project2016.TreeGraph
             }
         }
 
-        //Check Subtree:
-        bool subTree(TreeNode t1, TreeNode t2)
+        //Check Subtree: ; T1 and T2 are two very large binary trees, with T1 much bigger than T2. Create an algorithm
+        //to determine if T2 is a subtree of T1
+        bool IsSubTree(TreeNode T1, TreeNode T2)
         {
+            if (T2 == null)
+                return true;
 
+            if (T1 == null)
+                return false;
+
+            bool isMatch = false;
+            isMatch = IsMatch(T1, T2);
+
+            if (isMatch)
+                return true;
+            else
+                return IsSubTree(T1.Left, T2) || IsSubTree(T1.Right, T2);
+        }   
+
+        //return true only if T1 and T2 have exact match;
+        bool IsMatch(TreeNode T1, TreeNode T2)
+        {
+            if (T1 == null && T2 == null)
+                return true;
+            if (T1 == null || T2 == null)
+                return false;
+
+            if (T1.Value == T2.Value)
+                return IsMatch(T1.Left, T2.Left) && IsMatch(T1.Right, T2.Right);
+            else
+                return false;
         }
 
     }
