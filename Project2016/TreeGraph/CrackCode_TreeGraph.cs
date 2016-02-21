@@ -255,6 +255,10 @@ namespace Project2016.TreeGraph
         }
 
         //Check Subtree:
+        bool subTree(TreeNode t1, TreeNode t2)
+        {
+
+        }
 
     }
 
