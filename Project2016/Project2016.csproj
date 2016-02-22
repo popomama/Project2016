@@ -49,6 +49,7 @@
     <Compile Include="LinkedList\TestLL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortingSeraching\CodeCrack_SortingSearching.cs" />
     <Compile Include="TreeGraph\CrackCode_TreeGraph.cs" />
   </ItemGroup>
   <ItemGroup>
