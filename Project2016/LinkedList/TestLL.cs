@@ -34,5 +34,26 @@ namespace Project2016.LinkedList
            mergedLL.printList();
 
         }
+
+        public static void test_CC_v6_2_4_Partition()
+        {
+            LList<int> l1 = new LList<int>();
+            Node<int> tempNode;
+            int temp;
+            Random r = new Random();
+            for (int i=0;i<10;i++)
+            {
+                temp = r.Next(50);
+                tempNode = new Node<int>(temp);
+                l1.AddNode(tempNode);
+            }
+
+            l1.printList();
+            CodeCrack_LL ccLL = new CodeCrack_LL();
+            
+            tempNode = ccLL.CC_v6_2_4_Partition(l1, 25);
+            l1.head = tempNode;
+            l1.printList();
+        }
     }
 }

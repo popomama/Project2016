@@ -40,11 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Array\CrackCode_Array.cs" />
     <Compile Include="Array\EPI_Array.cs" />
+    <Compile Include="Array\TestArray.cs" />
     <Compile Include="BitOperation\BitBasic.cs" />
     <Compile Include="BitOperation\CarckCode.cs" />
     <Compile Include="BitOperation\EPI.cs" />
     <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="LinkedList\CodeCrack_LL.cs" />
     <Compile Include="LinkedList\EPI_LL.cs" />
     <Compile Include="LinkedList\TestLL.cs" />
     <Compile Include="Program.cs" />

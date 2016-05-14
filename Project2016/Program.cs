@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Project2016.LinkedList;
+using Project2016.Array;
 
 namespace Project2016
 {
@@ -9,7 +10,9 @@ namespace Project2016
     {
         static void Main(string[] args)
         {
-            TestLL.testEPI701();
+            //TestLL.testEPI701();
+            // TestArray.testCC_Array_CCV6_IsPalindromePermutation();
+            TestLL.test_CC_v6_2_4_Partition();
         }
     }
 }
