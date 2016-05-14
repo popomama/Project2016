@@ -287,6 +287,23 @@ namespace Project2016.TreeGraph
                 return false;
         }
 
+
+        //v6 4.7 Build Order
+        // You are given a list of projects and a list of dependencies(which is a list of pairs of projects
+        // where the first project is dependent on the second project). All of a project's dependencies must
+        // be built before the project is. Find a build order that will allow the projects to be built. If there
+        //is no valid order, return an error.
+        //Example:
+        //input:
+        // projects: a,b,c,d,e,f
+        //dependenies: (d,a),(b,f), (d,b), (a,f), (c,d)
+        //Output: f,e,a,b,d,c
+        public string[] CC_V6_47_BuildOrder(string[] projects, string[][] dependencies)
+        {
+
+
+        }
+
     }
 
 }
