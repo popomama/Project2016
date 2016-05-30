@@ -85,6 +85,40 @@ namespace Project2016.Helpers
         public TreeNode root;
     }
 
+    class Graph
+    {
+        public int VertexNum;
+        public List<List<int>> adjancencyList;
+        public int[] indgree;
+
+        public Graph(int num)
+        {
+            this.VertexNum = num;
+            adjancencyList = new List<List<int>>(VertexNum);
+            indgree = new int[VertexNum];
+            for (int i = 0; i < VertexNum; i++)
+            {
+                adjancencyList.Add(new List<int>());
+                indgree[i] = 0;
+            }
+            
+
+        }
+
+        public void AddEdge(int source, int destination)
+        {
+            adjancencyList[source].Add(destination);
+            indgree[destination]++;
+        }
+    }
+
+    class Vertex
+    {
+        int value;
+        int indegree;
+       
+    }
+
 
 
 }

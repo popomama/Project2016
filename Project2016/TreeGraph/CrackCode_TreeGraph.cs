@@ -298,12 +298,106 @@ namespace Project2016.TreeGraph
         // projects: a,b,c,d,e,f
         //dependenies: (d,a),(b,f), (d,b), (a,f), (c,d)
         //Output: f,e,a,b,d,c
-        public string[] CC_V6_47_BuildOrder(string[] projects, string[][] dependencies)
+        public int[] CC_V6_47_BuildOrder(Graph g)
         {
+            Queue<int> SortedQueue = new Queue<int>(g.VertexNum);
+            Queue<int> WorkingQueue = new Queue<int>();
+            for (int i = 0; i < g.VertexNum; i++)
+                if (g.indgree[i] == 0)
+                    WorkingQueue.Enqueue(i);
 
+            int currentItem;
+            while(WorkingQueue.Count!=0)
+            {
+                currentItem = WorkingQueue.Dequeue();
+                SortedQueue.Enqueue(currentItem);
+                for (int i = 0; i < g.adjancencyList[currentItem].Count; i++)
+                {
+                    g.indgree[g.adjancencyList[currentItem][i]]--;
+                    if (g.indgree[g.adjancencyList[currentItem][i]] == 0)
+                        WorkingQueue.Enqueue(g.adjancencyList[currentItem][i]);
+                }
+                        
+
+            }
+
+            if (SortedQueue.Count != g.VertexNum)
+                return null;
+            else
+                return SortedQueue.ToArray();
+        }
+
+        //v6 4.7 variation  Build Order_ALL
+        // You are given a list of projects and a list of dependencies(which is a list of pairs of projects
+        // where the first project is dependent on the second project). All of a project's dependencies must
+        // be built before the project is. Find ALL build order that will allow the projects to be built. 
+        //Example:
+        //input:
+        // projects: a,b,c,d,e,f
+        //dependenies: (d,a),(b,f), (d,b), (a,f), (c,d)
+        //Output: f,e,a,b,d,c
+        //        
+        public void CC_V6_47_BuildOrderAll(Graph g)
+        {
+            bool[] isVistied = new bool[g.VertexNum];
+            List<int> workingList = new List<int>(g.VertexNum);
+
+            for (int i = 0; i < g.VertexNum; i++)
+                isVistied[i] = false; // initialize the isVisit to be false;
+
+            //use recursive function to print all possible orders
+            BuildAllSequence(g, isVistied, workingList);
 
         }
 
+        private void BuildAllSequence(Graph g, bool[] isVistied, List<int> workingList)
+        {
+
+            if (workingList.Count == g.VertexNum) // we already have qualified orders, print the result.
+            {
+                for (int i = 0; i < g.VertexNum; i++)
+                    Console.Write(workingList[i] + ", ");
+                Console.WriteLine();
+                return;
+            }
+           
+
+            // 
+            for(int currentVertex = 0; currentVertex < g.VertexNum; currentVertex++)
+            {
+                if (g.indgree[currentVertex] == 0 && !isVistied[currentVertex])
+                {
+                    isVistied[currentVertex] = true;
+                    workingList.Add(currentVertex);
+
+                    //reduce the indegree of the neighbors
+                    for (int i = 0; i < g.adjancencyList[currentVertex].Count; i++)
+                    {
+                        g.indgree[g.adjancencyList[currentVertex][i]]--;
+                        //if (g.indgree[g.adjancencyList[currentVertex][i]] == 0)
+                        //    workingQueue.Enqueue(g.adjancencyList[currentVertex][i]);
+                    }
+
+                    BuildAllSequence(g, isVistied, workingList);
+
+                    //remvoe the current vertex from the queue;
+                    workingList.Remove(currentVertex);
+
+                    //increase the indegree of the neighbors
+                    for (int i = 0; i < g.adjancencyList[currentVertex].Count; i++)
+                    {
+                        g.indgree[g.adjancencyList[currentVertex][i]]++;
+                        //if (g.indgree[g.adjancencyList[currentVertex][i]] == 0)
+                        //    workingQueue.Enqueue(g.adjancencyList[currentVertex][i]);
+                    }
+
+
+                    isVistied[currentVertex] = false;
+
+                }
+
+            }
+        }
     }
 
 }
