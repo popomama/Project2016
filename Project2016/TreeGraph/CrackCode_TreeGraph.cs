@@ -302,29 +302,34 @@ namespace Project2016.TreeGraph
         {
             Queue<int> SortedQueue = new Queue<int>(g.VertexNum);
             Queue<int> WorkingQueue = new Queue<int>();
+
+            //first find all the vertices that have no dependency, and put them in the working queue
             for (int i = 0; i < g.VertexNum; i++)
                 if (g.indgree[i] == 0)
                     WorkingQueue.Enqueue(i);
 
             int currentItem;
-            while(WorkingQueue.Count!=0)
+
+            while(WorkingQueue.Count!=0)  //loop through the current the working queue until it's empty
             {
-                currentItem = WorkingQueue.Dequeue();
-                SortedQueue.Enqueue(currentItem);
-                for (int i = 0; i < g.adjancencyList[currentItem].Count; i++)
+                currentItem = WorkingQueue.Dequeue();//find the first vertex that has no dependency
+
+                SortedQueue.Enqueue(currentItem);//add it to the result queue
+
+                for (int i = 0; i < g.adjancencyList[currentItem].Count; i++) // loop through the adjucentList of the current vertex
                 {
-                    g.indgree[g.adjancencyList[currentItem][i]]--;
-                    if (g.indgree[g.adjancencyList[currentItem][i]] == 0)
+                    g.indgree[g.adjancencyList[currentItem][i]]--; // to each vertex adjacent to the current, reduce the indegree since we take off the current vertex
+                    if (g.indgree[g.adjancencyList[currentItem][i]] == 0)  // if the adjacent vertex has no dependency, then add it to the working queue
                         WorkingQueue.Enqueue(g.adjancencyList[currentItem][i]);
                 }
                         
 
             }
 
-            if (SortedQueue.Count != g.VertexNum)
-                return null;
+            if (SortedQueue.Count != g.VertexNum)  
+                return null; // if the vertext number in the result queue is not euqal to the total vertextNum, they we have cycle, reutrs now
             else
-                return SortedQueue.ToArray();
+                return SortedQueue.ToArray(); // if the vertext number in the result queue is  euqal to the total vertextNum, we have resolve the issue
         }
 
         //v6 4.7 variation  Build Order_ALL
@@ -339,7 +344,8 @@ namespace Project2016.TreeGraph
         //        
         public void CC_V6_47_BuildOrderAll(Graph g)
         {
-            bool[] isVistied = new bool[g.VertexNum];
+            bool[] isVistied = new bool[g.VertexNum]; // may define in the graph object it's self
+
             List<int> workingList = new List<int>(g.VertexNum);
 
             for (int i = 0; i < g.VertexNum; i++)
@@ -365,10 +371,10 @@ namespace Project2016.TreeGraph
             // 
             for(int currentVertex = 0; currentVertex < g.VertexNum; currentVertex++)
             {
-                if (g.indgree[currentVertex] == 0 && !isVistied[currentVertex])
+                if (g.indgree[currentVertex] == 0 && !isVistied[currentVertex])//only process the current vertex if it doesn't depend on other vertices and it's not visited 
                 {
-                    isVistied[currentVertex] = true;
-                    workingList.Add(currentVertex);
+                    isVistied[currentVertex] = true; //mark it as visited.
+                    workingList.Add(currentVertex); //add it to the result quue
 
                     //reduce the indegree of the neighbors
                     for (int i = 0; i < g.adjancencyList[currentVertex].Count; i++)
@@ -383,7 +389,7 @@ namespace Project2016.TreeGraph
                     //remvoe the current vertex from the queue;
                     workingList.Remove(currentVertex);
 
-                    //increase the indegree of the neighbors
+                    //increase(back) the indegree of the neighbors
                     for (int i = 0; i < g.adjancencyList[currentVertex].Count; i++)
                     {
                         g.indgree[g.adjancencyList[currentVertex][i]]++;
