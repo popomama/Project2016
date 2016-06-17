@@ -116,10 +116,42 @@ namespace Project2016.TreeGraph
         }
 
 
-        //breadth first search
-        void BFS(Graph g)
+        //Find the shortest path from start vertex
+        //complexity: O(V+E)
+        int[] ShortestPath_Unweighted(Graph g, int startVertex)
         {
 
+            int[] distance = new int[g.VertexNum];//record the path length;
+            for (int i = 0; i < g.VertexNum; i++)
+                distance[i] = -1; //initialize the value to -1 or infinite
+
+            distance[startVertex] = 0; //set the distance of the startVertex to 0
+
+            Queue<int> workingQueue = new Queue<int>();
+            workingQueue.Enqueue(startVertex); // push the startVertex to working queue
+
+            int currentAdjacent, currentVertex;
+
+            while(workingQueue.Count>0) //loop through the working queue until it's empty
+            {
+                currentVertex = workingQueue.Dequeue(); // get the current Vertex
+
+
+                for (int i=0;i<g.adjancencyList[currentVertex].Count;i++) //find all the neighbors
+                {
+                    currentAdjacent = g.adjancencyList[currentVertex][i]; //loop through the neighbors
+
+                    if (distance[currentAdjacent] != -1) // this means the neighbor hasnt been visited yet
+                        distance[currentAdjacent] = distance[currentVertex]++; // set the distance
+
+                    workingQueue.Enqueue(currentAdjacent); //add the neighbor into the queue
+                }
+            }
+
+            return distance;
+
         }
+
+
     }
 }

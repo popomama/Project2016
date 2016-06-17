@@ -47,6 +47,7 @@
     <Compile Include="BitOperation\CarckCode.cs" />
     <Compile Include="BitOperation\EPI.cs" />
     <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="LinkedList\CodeCrack_LL.cs" />
     <Compile Include="LinkedList\EPI_LL.cs" />
     <Compile Include="LinkedList\TestLL.cs" />

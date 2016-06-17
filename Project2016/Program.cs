@@ -4,6 +4,7 @@ using System.Text;
 using Project2016.LinkedList;
 using Project2016.Array;
 using Project2016.TreeGraph;
+using Project2016.Helpers;
 
 namespace Project2016
 {
@@ -14,7 +15,9 @@ namespace Project2016
             //TestLL.testEPI701();
             // TestArray.testCC_Array_CCV6_IsPalindromePermutation();
             //TestLL.test_CC_v6_2_4_Partition();
-            TestTreeGraph.Test_CC_V6_47_BuildOrder_All();
+            //TestTreeGraph.Test_CC_V6_47_BuildOrder_All();
+
+            TestHelper.TestHeap();
         }
     }
 }
