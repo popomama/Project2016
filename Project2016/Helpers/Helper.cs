@@ -119,16 +119,71 @@ namespace Project2016.Helpers
        
     }
 
+    class adjVertex 
+    {
+       public  int dest;
+       public double  weight;
+      // public List<VertexG> adjacencyList;   
+      
+        public adjVertex(int dest,double weight)
+        {
+            this.dest = dest;
+            this.weight = weight;
+        }      
+    }
+
+    class GraphG
+    {
+       public int vertexNumber; //number of vertices
+        //int startVertex;
+        // VertexG[] vertexes;
+        double[] pathWeights;
+        int[] position;
+        public List<Dictionary<int, double>> adjacencyList; //key value pair record the destination and weight between source and destination
+     //   pair
+
+        public GraphG(int number)
+        {
+            vertexNumber = number;
+            adjacencyList = new List<Dictionary<int, double>>();
+
+            //for(int i=0;i<vertexNumber;i++)
+            //{
+            //    adjacencyList[i] = new List<Dictionary<int, double>>(); // initialize each individual adjacentList
+            //}
+            //pathWeights = new double[vertexNumber];
+            //position = new int[vertexNumber];
+
+        }
+
+        public void AddEdge(int source, int destination, double weight)
+        {
+            //adjancencyList[source].Add(destination);
+            adjacencyList[source].Add(destination, weight);
+        }
+
+        //public int StartVertex {
+        //    get { return startVertex; }
+        //    set { startVertex = value; }
+        //}
+        //public void shortestPath(int start) // function builds the shortest path from start point
+        //{s
+
+        //}
+
+    }
+
     //MiniHeap
     //3 operations: Insert(percolate up), DeletreMin(percolate down), CreateHeap
     // On Average it takes 2.67 comparision to do an Insert, but worst case is O(LogN)
     //Other Operations: DecreaseKey(p, delta) at position p, IncreaseKey(p, delta) at position p, removeKet(p) at position p
     class Heap
     {
-        int capacity, count;
+        int capacity; // the capacity of the heap
+        int count;  // current size, count can't exceed capacity
        public int[] Items;
 
-        public Heap(int capacity=10)
+        public Heap(int capacity=10)    // set the default capacity value to 10
         {
             this.capacity = capacity;
             Items = new int[capacity];
@@ -136,27 +191,29 @@ namespace Project2016.Helpers
 
         }
 
-        public void insert(int value)
+        // add new number to the heap
+        public void insert(int value) 
         {
             if (capacity == count)
                 return; //the capacity is full, can't add new item;
             else
             {
-                Items[count] = value;
-                count++;
-                BubbleUp(count-1);
+                Items[count] = value;  // add the value to the last element
+                count++;    // increase the count
+                BubbleUp(count-1);      // Bublle up the last value
 
             }
 
         }
 
+        //take the minimum value off the heap
         public int deleteMin()
         {
             if (count == 0)
                 throw new Exception("no value to delete");
 
             int minValue = Items[0];
-            
+
             if (count > 1)
 
             {
@@ -165,6 +222,8 @@ namespace Project2016.Helpers
 
                 TrippleDown(0);
             }
+            else // the heap is empty after the minimum is taken off
+                count--;
 
             return minValue;
 
