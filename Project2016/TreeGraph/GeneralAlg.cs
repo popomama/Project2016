@@ -153,6 +153,13 @@ namespace Project2016.TreeGraph
 
         }
 
+        //use the heap to implement Dijkstra algorithm
+        public void  ShortestPathDijHeap(Graph g, int start)
+        {
+           //
+        }
+
+
         //calculate the shortestPath by using Dijkstra's algorithm
         //it's not using heap to compare so the performance is O(V2)
         public void ShortestPath(GraphG g, int start)
@@ -176,7 +183,7 @@ namespace Project2016.TreeGraph
 
             int markedCount = 0; //record the number of nodes whose distance has been decided
 
-            int closestUnmarkedNode = 0; //initially it's the start point 
+            int closestUnmarkedNode = -1;  
 
             int neighbor; //record the neighbor v of current node u
             double weight;// weight between u and v

@@ -14,6 +14,14 @@ namespace Project2016.Helpers
             arr[i]= arr[j];
             arr[j]= temp;
         }
+
+        public static void swap(KeyValuePair<int, double>[] items, int i, int j)
+        {
+            KeyValuePair<int, double> temp = items[i];
+            items[i] = items[j];
+            items[j] = temp;  
+
+        }
     }
 
     class Node<T>
@@ -173,6 +181,136 @@ namespace Project2016.Helpers
 
     }
 
+    //this is a generic heap, each item has a <key,value> pair
+    class HeapG
+    {
+        int capacity; // the capacity of the heap
+        int count;  // current size, count can't exceed capacity
+        public KeyValuePair<int, double>[] items;
+        int[] itemPositions; // this array is used to quickly locate a specific item in the heap when doing lookup
+                            // the itemPositions array is important for us to get item in the heap in O(1) time 
+        public HeapG(int capacity = 10)
+        {
+            this.capacity = capacity;
+            items = new KeyValuePair<int, double>[capacity];
+            count = 0;
+            itemPositions = new int[capacity];
+
+        }
+
+
+        public void Insert(KeyValuePair<int, double> pair)
+        {
+            if (capacity == count)
+                return; //the capacity is full, can't add new item;
+            else
+            {
+                items[count] = pair;  // add the value to the last element
+                itemPositions[count] = count;// set the position
+                count++;    // increase the count
+                BubbleUp(count - 1);      // Bublle up the last value
+
+            }
+
+        }
+
+        private void BubbleUp(int currentIndex)
+        {
+            while (currentIndex > 0) //keep looping until it reaches the root;
+            {
+                if (items[currentIndex].Value < items[(currentIndex - 1) / 2].Value)//only need to move up if the current node > its parent
+                {
+                    Helper.swap(items, currentIndex, (currentIndex - 1) / 2);
+                    itemPositions[items[currentIndex].Key] = currentIndex;
+                    itemPositions[items[(currentIndex - 1) / 2].Key] = (currentIndex - 1) / 2;
+                    currentIndex = (currentIndex - 1) / 2; // reset the currentIndex to its parent
+                }
+                else
+                    return; //otherwise, we can return
+            }
+        }
+
+        //take the minimum value off the heap
+        public double DeleteMin()
+        {
+            if (count == 0)
+                throw new Exception("no value to delete");
+
+            double minValue = items[0].Value;
+
+            if (count > 1)
+
+            {
+                items[0] = items[count - 1]; //move the last to the root
+                count--; //redcue the count #
+
+                itemPositions[items[0].Key] = 0;
+               // itemPositions[items[currentIndex * 2 + 1].Key] = currentIndex * 2 + 1;
+
+                TrippleDown(0);
+            }
+            else // the heap is empty after the minimum is taken off
+                count--;
+
+            return minValue;
+
+        }
+
+
+        private void TrippleDown(int currentIndex)
+        {
+            //            int temp;
+            while (currentIndex * 2 + 1 <= count - 1)// only loop until the current node is a leaf
+            {
+                if (count == 2 * currentIndex + 1)// the current node only has left child, but no right child, 
+                {
+                    if (items[currentIndex].Value <= items[currentIndex * 2 + 1].Value) // if the current node is smaller than its left child, swap the value
+                    {
+                        Helper.swap(items, currentIndex, currentIndex * 2 + 1);
+
+                        itemPositions[items[currentIndex].Key] = currentIndex;
+                        itemPositions[items[currentIndex * 2 + 1].Key] = currentIndex * 2 + 1;
+
+                        //temp = Items[currentIndex * 2 + 1];
+                        //Items[currentIndex * 2 + 1] = Items[currentIndex];
+                        //Items[currentIndex] = temp;
+
+                    }
+                    //since the current child has no right child, after swap, it's already leaf, we stop here.                    
+                }
+                else//the current node has both left and right child
+                {
+                    if ((items[currentIndex].Value <= items[currentIndex * 2 + 1].Value) && (items[currentIndex].Value <= items[currentIndex * 2 + 2].Value))
+                        return;
+                    else
+                    {
+                        if (items[currentIndex * 2 + 1].Value < items[currentIndex * 2 + 2].Value) // if left<right, swap current with left
+                        {
+                            Helper.swap(items, currentIndex, currentIndex * 2 + 1);
+                            itemPositions[items[currentIndex].Key] = currentIndex;
+                            itemPositions[items[currentIndex * 2 + 1].Key] = currentIndex * 2 + 1;
+
+                            //temp = Items[currentIndex * 2 + 1];
+                            //Items[currentIndex * 2 + 1] = Items[currentIndex];
+                            //Items[currentIndex] = temp;
+                            currentIndex = currentIndex * 2 + 1; // reset the current index
+                        }
+                        else// if left>right, swap current with right
+                        {
+                            Helper.swap(items, currentIndex, currentIndex * 2 + 2);
+                            itemPositions[items[currentIndex].Key] = currentIndex;
+                            itemPositions[items[currentIndex * 2 + 2].Key] = currentIndex * 2 + 2;
+                            //temp = Items[currentIndex * 2 + 2];
+                            //Items[currentIndex * 2 + 2] = Items[currentIndex];
+                            //Items[currentIndex] = temp;
+                            currentIndex = currentIndex * 2 + 2; //reset the current index;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
     //MiniHeap
     //3 operations: Insert(percolate up), DeletreMin(percolate down), CreateHeap
     // On Average it takes 2.67 comparision to do an Insert, but worst case is O(LogN)
