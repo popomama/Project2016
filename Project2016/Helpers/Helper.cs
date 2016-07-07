@@ -184,10 +184,10 @@ namespace Project2016.Helpers
     //this is a generic heap, each item has a <key,value> pair
     class HeapG
     {
-        int capacity; // the capacity of the heap
-        int count;  // current size, count can't exceed capacity
+        public int capacity; // the capacity of the heap
+        public int count;  // current size, count can't exceed capacity
         public KeyValuePair<int, double>[] items;
-        int[] itemPositions; // this array is used to quickly locate a specific item in the heap when doing lookup
+        public int[] itemPositions; // this array is used to quickly locate a specific item in the heap when doing lookup
                             // the itemPositions array is important for us to get item in the heap in O(1) time 
         public HeapG(int capacity = 10)
         {
@@ -214,7 +214,7 @@ namespace Project2016.Helpers
 
         }
 
-        private void BubbleUp(int currentIndex)
+        public void BubbleUp(int currentIndex)
         {
             while (currentIndex > 0) //keep looping until it reaches the root;
             {
@@ -231,12 +231,13 @@ namespace Project2016.Helpers
         }
 
         //take the minimum value off the heap
-        public double DeleteMin()
+        public KeyValuePair<int, double> DeleteMin()
         {
             if (count == 0)
                 throw new Exception("no value to delete");
 
-            double minValue = items[0].Value;
+            KeyValuePair<int, double> currentMin = items[0];
+            
 
             if (count > 1)
 
@@ -245,19 +246,34 @@ namespace Project2016.Helpers
                 count--; //redcue the count #
 
                 itemPositions[items[0].Key] = 0;
-               // itemPositions[items[currentIndex * 2 + 1].Key] = currentIndex * 2 + 1;
-
+                // itemPositions[items[currentIndex * 2 + 1].Key] = currentIndex * 2 + 1;
+                itemPositions[currentMin.Key] = count; // set the removed item(min)'s position to be outside of the current heap
                 TrippleDown(0);
             }
             else // the heap is empty after the minimum is taken off
                 count--;
 
-            return minValue;
+            return currentMin;
 
         }
 
+        public bool IsInisdeHeap(int key)
+        {
+            int pos = itemPositions[key];
+            if (pos < count)
+                return true;
 
-        private void TrippleDown(int currentIndex)
+            return false;
+        }
+        public void DecreaseKey(int key, double value)
+        {
+            int currentIndex = this.itemPositions[key]; // find the location of the key in the heap
+            items[currentIndex] = new KeyValuePair<int, double>(key, value); // is this a good practice by creating a new keyValuepair? What's happening to the old pair?
+            BubbleUp(currentIndex);//bubble up the item if needed
+        }
+
+
+        public void TrippleDown(int currentIndex)
         {
             //            int temp;
             while (currentIndex * 2 + 1 <= count - 1)// only loop until the current node is a leaf

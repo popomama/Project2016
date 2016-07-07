@@ -154,9 +154,42 @@ namespace Project2016.TreeGraph
         }
 
         //use the heap to implement Dijkstra algorithm
-        public void  ShortestPathDijHeap(Graph g, int start)
+        public void  ShortestPathDijHeap(GraphG g, int start)
         {
-           //
+            //
+            HeapG heap = new HeapG(g.vertexNumber); // create a heap
+            for(int i=0;i<g.vertexNumber;i++)
+            {
+                heap.items[i] = new KeyValuePair<int,double>(i, Double.MaxValue);
+                heap.itemPositions[i] = i;
+            }
+            heap.DecreaseKey(start, 0); // set the distance of the source to be 0;
+
+            KeyValuePair<int, double> currentMin;
+            int currentNode, currentNeighbour, currentNeighbourPosition;
+            while (heap.count>0)
+            {
+                currentMin = heap.DeleteMin();
+                currentNode = currentMin.Key;
+                Dictionary<int, double> adjacentPath = g.adjacencyList[currentNode];
+                foreach(KeyValuePair<int, double> pair in adjacentPath)
+                {
+                    currentNeighbour = pair.Key;
+                    currentNeighbourPosition = heap.itemPositions[currentNeighbour];
+                    if(heap.IsInisdeHeap(currentNeighbour) && ((pair.Value + currentMin.Value)<heap.items[currentNeighbourPosition].Value))
+                    {
+                        heap.DecreaseKey(currentNeighbour, pair.Value + currentMin.Value);
+                    }
+
+                }
+            }
+
+
+            //now print the shortest path
+            for(int i = g.vertexNumber-1; i>=0;i--)
+            {
+                Console.WriteLine(i + "-->" + heap.items[i].Value); 
+            }
         }
 
 
