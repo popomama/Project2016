@@ -292,6 +292,79 @@ namespace Project2016.TreeGraph
             return closestUnmarked;
         }
 
+        //Implements Bellman Ford Algorithm
+        double[] ShortestPath_BF(GraphG g, int startIndex)
+        {
+            int vertexNumber = g.vertexNumber;
 
+            double[] distance = new double[vertexNumber];
+
+            //step 1: initialize the distance to infinity except the start point
+            for (int i = 0; i < vertexNumber; i++)
+                distance[i] = double.MaxValue; // initialize distance of all points to be infinity
+
+            distance[startIndex] = 0; // set the distance for start point to 0
+
+            int destinationIndex;
+            bool isUpdated = false;
+
+            //step 2: loop VertexNuber-1 times, in each loop, vist edges one by one and then relax the disctance.
+            for(int j=0;j<vertexNumber-1; j++) // we will not use the index j as we just want to make sure we will loop V-1 times
+            {
+
+                for(int i=0;i<vertexNumber;i++)
+                {
+                    foreach(KeyValuePair<int, double> pair in g.adjacencyList[i])
+                    {
+                        destinationIndex = pair.Key;
+                        if(distance[i]!=double.MaxValue) // do only if the distance of the current node is not infinity
+                        {
+                            if ((distance[i] + pair.Value) < distance[destinationIndex])    // shorter path is found to destinationIndex
+                            {
+                                distance[destinationIndex] = distance[i] + pair.Value; // update the distance value for destinationIndex
+                                isUpdated = true; // record that at least one node is relaxed
+                            }
+                        }
+
+                    }
+
+                    
+                }
+
+                if (isUpdated == false) // if there is no update in this loop, we will exit in next loop as there is no relaxiation will happen
+                    j = vertexNumber;
+
+                isUpdated = false;  //reset the isUpdated value to false before next loop    
+
+            }
+
+//            int bNegativeCycleFound = false;
+
+            //step 3: detect the cycle that
+            for (int i = 0; i < vertexNumber; i++)
+            {
+                foreach (KeyValuePair<int, double> pair in g.adjacencyList[i])
+                {
+                    destinationIndex = pair.Key;
+                    if (distance[i] != double.MaxValue) // do only if the distance of the current node is not infinity
+                    {
+                        if ((distance[i] + pair.Value) < distance[destinationIndex])    // if shorter path is found to destinationIndex, then there is a negative cycle
+                        {
+                            //distance[destinationIndex] = distance[i] + pair.Value; // update the distance value for destinationIndex
+                            // bNegativeCycleFound = true; // record that at least one node is relaxed
+
+                            Console.WriteLine("negative cycle found");
+                        }
+                    }
+
+                   
+
+                }
+
+
+            }
+            return distance;
+
+        }
     }
 }
