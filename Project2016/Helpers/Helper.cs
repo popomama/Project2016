@@ -97,7 +97,7 @@ namespace Project2016.Helpers
     {
         public int VertexNum;
         public List<List<int>> adjancencyList;
-        public int[] indgree;
+        public int[] indgree;// a dedicated array recording the indgree of each node(used by topological sort)
 
         public Graph(int num)
         {

@@ -300,8 +300,8 @@ namespace Project2016.TreeGraph
         //Output: f,e,a,b,d,c
         public int[] CC_V6_47_BuildOrder(Graph g)
         {
-            Queue<int> SortedQueue = new Queue<int>(g.VertexNum);
-            Queue<int> WorkingQueue = new Queue<int>();
+            Queue<int> SortedQueue = new Queue<int>(g.VertexNum);//final sorted queue
+            Queue<int> WorkingQueue = new Queue<int>();//temp working queue containing the nodes that have no dependency but haven't been inserted into the final sorted queue
 
             //first find all the vertices that have no dependency, and put them in the working queue
             for (int i = 0; i < g.VertexNum; i++)
@@ -309,6 +309,7 @@ namespace Project2016.TreeGraph
                     WorkingQueue.Enqueue(i);
 
             int currentItem;
+            int currentNeighbour;
 
             while(WorkingQueue.Count!=0)  //loop through the current the working queue until it's empty
             {
@@ -318,18 +319,63 @@ namespace Project2016.TreeGraph
 
                 for (int i = 0; i < g.adjancencyList[currentItem].Count; i++) // loop through the adjucentList of the current vertex
                 {
-                    g.indgree[g.adjancencyList[currentItem][i]]--; // to each vertex adjacent to the current, reduce the indegree since we take off the current vertex
-                    if (g.indgree[g.adjancencyList[currentItem][i]] == 0)  // if the adjacent vertex has no dependency, then add it to the working queue
-                        WorkingQueue.Enqueue(g.adjancencyList[currentItem][i]);
+                    currentNeighbour = g.adjancencyList[currentItem][i]; // get the next neighbor of the current node that is just taken off from the working queue
+                    g.indgree[currentNeighbour]--; // to each vertex adjacent to the current, reduce the indegree since we take off the current vertex
+                    if (g.indgree[currentNeighbour] == 0)  // if the adjacent vertex has no dependency, then add it to the working queue
+                        WorkingQueue.Enqueue(currentNeighbour);
                 }
                         
 
             }
 
             if (SortedQueue.Count != g.VertexNum)  
-                return null; // if the vertext number in the result queue is not euqal to the total vertextNum, they we have cycle, reutrs now
+                return null; // if the vertext number in the result queue is not euqal to the total vertextNum, they we have cycle, returns now
             else
                 return SortedQueue.ToArray(); // if the vertext number in the result queue is  euqal to the total vertextNum, we have resolve the issue
+        }
+
+
+        //This is the alternative method to implement the topological sorting
+        //it uses DFS, and do not need the indegree array, it use statck instead of queue
+        public void CC_V6_47_BuildOrder_DFS(Graph g)
+        {
+            int vertextNumber = g.VertexNum;
+
+            bool[] isVisited = new bool[vertextNumber];
+            for (int i = 0; i < vertextNumber; i++)
+                isVisited[i] = false;
+
+            Stack<int> orderStack = new Stack<int>(vertextNumber);
+
+            for(int i=0;i<vertextNumber;i++)
+            {
+                if (!isVisited[i])
+                    BuildOrderHelp(g, i, orderStack, isVisited);
+            }
+
+            int nodeNumber;
+            while(orderStack.Count>0)
+            {
+                nodeNumber = orderStack.Pop();
+                Console.Write(nodeNumber + ", ");
+            }
+            Console.WriteLine();
+        }
+
+        private void BuildOrderHelp(Graph g, int currentNode, Stack<int> orderStack, bool[] isVisited)
+        {
+
+            isVisited[currentNode] = true;
+            int currentNeighbour;
+             
+            for(int i=0;i<g.adjancencyList[currentNode].Count;i++)
+            {
+                currentNeighbour = g.adjancencyList[currentNode][i];
+                if (!isVisited[currentNeighbour])
+                    BuildOrderHelp(g, currentNeighbour, orderStack, isVisited);
+            }
+
+            orderStack.Push(currentNode);
         }
 
         //v6 4.7 variation  Build Order_ALL
