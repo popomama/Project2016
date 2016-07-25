@@ -143,9 +143,11 @@ namespace Project2016.TreeGraph
                     currentAdjacent = g.adjancencyList[currentVertex][i]; //loop through the neighbors
 
                     if (distance[currentAdjacent] != -1) // this means the neighbor hasnt been visited yet
+                    {
                         distance[currentAdjacent] = distance[currentVertex]++; // set the distance
 
-                    workingQueue.Enqueue(currentAdjacent); //add the neighbor into the queue
+                        workingQueue.Enqueue(currentAdjacent); //add the neighbor into the queue
+                    }
                 }
             }
 
@@ -293,6 +295,7 @@ namespace Project2016.TreeGraph
         }
 
         //Implements Bellman Ford Algorithm
+        //this can handle the edge with negative value
         double[] ShortestPath_BF(GraphG g, int startIndex)
         {
             int vertexNumber = g.vertexNumber;
@@ -308,11 +311,11 @@ namespace Project2016.TreeGraph
             int destinationIndex;
             bool isUpdated = false;
 
-            //step 2: loop VertexNuber-1 times, in each loop, vist edges one by one and then relax the disctance.
+            //step 2: loop VertexNuber-1 times, in each loop, visit edges one by one and then relax the disctance.
             for(int j=0;j<vertexNumber-1; j++) // we will not use the index j as we just want to make sure we will loop V-1 times
             {
 
-                for(int i=0;i<vertexNumber;i++)
+                for(int i=0;i<vertexNumber;i++)//in each loop, visit edges one by one and then relax the disctance.
                 {
                     foreach(KeyValuePair<int, double> pair in g.adjacencyList[i])
                     {
