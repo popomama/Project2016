@@ -371,6 +371,7 @@ namespace Project2016.TreeGraph
         }
 
         //Minimum Spanning Tree
+        /* */
         //1. Krskal Algorithm
         //Use Greedy algorithm. (1)Initialize the nodes to n set with one noe in each set.(2)Order all the edges in assending order (ON(ElgE= ElgV)
         //(3) Repeat: 
@@ -436,5 +437,19 @@ namespace Project2016.TreeGraph
                         prev(z) = v
                         decreasekey(H, z)    -- O(lgV)
          * */
+
+
+        //Huffman encoding
+        //procedure Huffman( f )
+        // Input: An array f[1 · · · n] of frequencies
+        // Output: An encoding tree with n leaves
+        //    1. build a binary heap H
+        //      for (i=1;i<=n;i++) insert(H, f[i])
+        //    2. for(int k=n+1;k<2n;k++)
+        //          i = deletemin(H); j = deletemin(H)
+        //          create a node K with child i, j;
+        //          f[K] = f[i]+f[j];
+        //          insert(H,K);
+
     }
 }
