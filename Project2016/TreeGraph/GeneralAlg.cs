@@ -369,5 +369,72 @@ namespace Project2016.TreeGraph
             return distance;
 
         }
+
+        //Minimum Spanning Tree
+        //1. Krskal Algorithm
+        //Use Greedy algorithm. (1)Initialize the nodes to n set with one noe in each set.(2)Order all the edges in assending order (ON(ElgE= ElgV)
+        //(3) Repeat: 
+        //  a. pick the shortest edges(u,v), (O(1))
+        //  b. if it doens't build a cycle(via find(u), find(v), O(lgV)), union(u,v) (O(1))
+        //overall complexity: ElgV
+        /*
+         * procedure kruskal (G, w)
+            Input: A connected undirected graph G = (V, E) with edge weights we
+            output: A minimum spanning three defined by the edges X
+            for all u ∈V:
+                makeset (u)
+                X = {}
+                sort the edges E by weight
+                for all edges {u, v} ∈ E, in increasing order of weight:
+                if find(u) ≠ find(v):
+                add edge {u, v} to X
+                union(u, v)
+
+        procedure makeset(x)
+            π(x) = x
+            rank(x) = 0
+        function find(x)
+            while x = π(x) : x = π(x)
+            return x
+        procedure union(x, y)
+            rx = find(x)
+            ry = find(y)
+            if rx = ry: return
+            if rank(rx) > rank(ry):
+                π(ry) = rx
+            else:
+                π(rx) = ry
+                if rank(rx) = rank(ry) : rank(ry) = rank(ry) + 1
+         * */
+
+        //2. Prim Algorithm -- Greedy algorithm
+        //similar to Dijakstra, initially randomly pick up a node, then use the birnary heap to build the min-queue that contains the cost of the nodes,
+        // whose edges are closest to the nodes in the set already.
+        /*
+         * X = { } (edges picked so far)
+            repeat until |X| = |V| − 1:
+                pick a set S ⊂ V for which X has no edges between S and V − S
+                let e ∈ E be the minimum-weight edge between S and V − S
+                X = X ∪ {e}
+
+
+        procedure prim (G, w)  -- total cost E(logV)
+            Input: A connected undirected graph G = (V, E) with edge
+            weights we
+            output: A minimum spanning tree defined by the array prev
+            for all u ∈V:
+                cost(u) = ∞
+                prev(u) = nil
+            pick any initial node u0
+            cost(u0) = 0
+            H = makequeue (V) (priority queue, using cost-values as keys)
+            while H is not empty:
+                v = deletemin (H)
+                for each {v, z} ∈ E :
+                    if cost(z) > w(v, z) :
+                        cost(z) = w(v, z)
+                        prev(z) = v
+                        decreasekey(H, z)    -- O(lgV)
+         * */
     }
 }
