@@ -6,6 +6,7 @@ using Project2016.Array;
 using Project2016.TreeGraph;
 using Project2016.Helpers;
 using System.IO.Compression;
+using Project2016.DP;
 
 
 
@@ -21,7 +22,10 @@ namespace Project2016
             //TestTreeGraph.Test_CC_V6_47_BuildOrder_All();
 
             //TestHelper.TestHeap();
-     
+            GFG gfg = new GFG();
+            gfg.TestCoinCount();
+
+
         }
 
        
