@@ -47,6 +47,7 @@
     <Compile Include="BitOperation\BitBasic.cs" />
     <Compile Include="BitOperation\CarckCode.cs" />
     <Compile Include="BitOperation\EPI.cs" />
+    <Compile Include="DP\GFG.cs" />
     <Compile Include="Generalquestions\Google1.cs" />
     <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
