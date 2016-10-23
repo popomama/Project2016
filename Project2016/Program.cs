@@ -22,8 +22,9 @@ namespace Project2016
             //TestTreeGraph.Test_CC_V6_47_BuildOrder_All();
 
             //TestHelper.TestHeap();
-            GFG gfg = new GFG();
-            gfg.TestCoinCount();
+            // GFG gfg = new GFG();
+            //gfg.TestCoinCount();
+            TestArray.testMisc_Array_FindPermutation();
 
 
         }

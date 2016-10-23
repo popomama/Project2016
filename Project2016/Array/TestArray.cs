@@ -20,5 +20,13 @@ namespace Project2016.Array
             s1 = "abcd dcf";
             result = cca.CCV6_IsPalindromePermutation_sol2(s1);
         }
+
+        public static void testMisc_Array_FindPermutation()
+        {
+            //            FindPermutation()
+            Misc ms = new Misc();
+            ms.FindPermutation(5, 2);
+
+        }
     }
 }

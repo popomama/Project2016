@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Array\CrackCode_Array.cs" />
     <Compile Include="Array\EPI_Array.cs" />
+    <Compile Include="Array\Misc.cs" />
     <Compile Include="Array\TestArray.cs" />
     <Compile Include="BitOperation\BitBasic.cs" />
     <Compile Include="BitOperation\CarckCode.cs" />
