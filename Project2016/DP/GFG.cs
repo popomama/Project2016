@@ -98,5 +98,57 @@ namespace Project2016.DP
             return 0;
         }
 
+
+        //Partition problem is to determine whether a given set can be partitioned into two subsets 
+        //such that the sum of elements in both subsets is same.
+        //below we assume the array has n elements, the partition will be sum/2 . We need to find out
+        //if there exists a subset of the arr of which the sum of the sub arrary equals sum/2 
+        bool FindPartition(int[] arr, int n)
+        {
+            int sum = 0;
+            for (int i = 0; i < n; i++)
+                sum += arr[i];
+
+            sum /= 2;
+
+            //now we create a 2-dim array to record the result from bottom to up.
+            //each row has the same sum, while each column stands for individual elememnt in the original array
+            //so the 2-dim array is (sum+1)x(n+1); and the overall complexity is O(sum*n)
+            bool[,] result = new bool[sum + 1, n + 1];
+
+            //initialize the first row, set each to true, since there is always subset of the array whose sum is 0
+            for (int i = 0; i < n + 1; i++)
+                result[0, i] = true;
+
+            //initialize the first column, set each to false(except (0,0)), since 
+            for (int i = 1; i < sum + 1; i++)
+                result[i, 0] = false;
+
+            //basically result[value, K] = result[value, K-1] or result[value-arr[k-1], k-1]
+            //                         case1 doesn't include kth element
+            //                         case2 does inlcude kth element(only if the kth element is smaller/equal to value)
+            //we only deal with positive number here. Also notice the index shift as index starts from 0 from the original array
+            for (int value = 1; value < sum + 1; value++)
+                for (int col = 1; col < n + 1; col++)
+                {
+                    if (arr[col - 1] > value)
+                        result[value, col] = result[value, col - 1];
+                    else
+                        result[value, col] = result[value, col - 1] || result[value - arr[col - 1], col - 1];
+                }
+
+            //print out the matrix
+            for (int value = 0; value < sum + 1; value++)
+            {
+                for (int col = 0; col < n + 1; col++)
+                {
+                    Console.Write(result[value, col] + " ");
+
+                }
+                Console.WriteLine();
+            }
+
+            return result[sum, n];
+        }
     }
 }
