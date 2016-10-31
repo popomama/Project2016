@@ -98,11 +98,19 @@ namespace Project2016.DP
             return 0;
         }
 
+        //Find the sub set of a collection whose sum is half of the total
+        //e. The input is a collection, C, of integers, and we are interested in a subset whose sum
+        //exactly half of the total sum of C. The problem is NP­hard
+        //this may be generalized to be the sum of a specifc value
+
+
+
 
         //Partition problem is to determine whether a given set can be partitioned into two subsets 
         //such that the sum of elements in both subsets is same.
         //below we assume the array has n elements, the partition will be sum/2 . We need to find out
         //if there exists a subset of the arr of which the sum of the sub arrary equals sum/2 
+        //this can also be used to find the minimum difference of the two subsets
         bool FindPartition(int[] arr, int n)
         {
             int sum = 0;
@@ -149,6 +157,10 @@ namespace Project2016.DP
             }
 
             return result[sum, n];
+
+            //noticed, if we want to partition the set into two subsets to minimize the difference of the sum of the two sets
+            //we only need to loop through result[k, n] (k=sum, sum-1, sum-2, ...0). the biggest k(the 1st K) we find is the one
+            //the difference will be 2*(sum-k).
         }
     }
 }

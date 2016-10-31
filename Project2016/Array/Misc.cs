@@ -56,15 +56,44 @@ namespace Project2016.Array
         }
 
 
+         
         //Find a triplet that sum to a given value
         //Given an array and a value, find if there is a triplet in array whose sum is equal to the given value.
         //If there is such a triplet present in array, then print the triplet and return true. Else return false. 
         //For example, if the given array is {12, 3, 4, 1, 6, 9} and given sum is 24, then there is a triplet(12, 3 and 9) 
         //present in array whose sum is 24.
+        bool Find3Sum(int[] arr, int sum)
+        {
+            bool bFound = false;
+
+            System.Array.Sort(arr); //sort the array
+
+            int left = 0;
+            int right = arr.Length - 1;
+            int mid;
+
+            for (left = 0; left < arr.Length - 2; left++)
+            {
+                mid = left + 1;
+                while (mid < right)
+                {
+                    if (arr[left] + arr[mid] + arr[right] == sum)
+                    {
+                        Console.Write(arr[left] + " " + arr[mid] + " " + arr[right]);
+                        bFound = true;
+                    }
+                    else if (arr[left] + arr[mid] + arr[right] < sum)
+                        mid++;
+                    else
+                        right--;
+                }
+            }
+
+            return bFound;
 
 
-        //Find 
-        //e. The input is a collection, C, of integers, and we are interested in a subset whose sum
-        //exactly half of the total sum of C. The problem is NP­hard
+        }
+
+        
     }
 }
