@@ -162,5 +162,34 @@ namespace Project2016.DP
             //we only need to loop through result[k, n] (k=sum, sum-1, sum-2, ...0). the biggest k(the 1st K) we find is the one
             //the difference will be 2*(sum-k).
         }
+
+        //Largest Sum Contiguous Subarray
+        //Write an efficient C program to find the sum of contiguous subarray within a one-dimensional array of numbers 
+        // which has the largest sum.
+        int maxSubArraySum(int[] a)
+        {
+            //O(N), //assuming at least one item in the array is positive
+            int maxSum = 0, currentSum = 0;
+            //int size = a.Length;
+
+            //for(int i=1;i<a.Length;i++) // this is not good, as we should take care if the array only has one element.
+            for (int i = 0; i < a.Length; i++)
+            {
+                currentSum += a[i];
+                if (currentSum < 0) //
+                {
+                    currentSum = 0;
+                    
+                }
+                else
+                {
+                    if (maxSum < currentSum)
+                        maxSum = currentSum;
+                }
+            }
+
+            return maxSum;
+
+        }
     }
 }
