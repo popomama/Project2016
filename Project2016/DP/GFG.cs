@@ -20,15 +20,15 @@ namespace Project2016.DP
         int CoinCount(int[] denominations, int total)
         {
             int numberOfDenominations = denominations.Count();
-            int[] countArray = new int[total+1];
+            int[] countArray = new int[total + 1];
 
             countArray[0] = 0;
-            for(int i =1;i<=total;i++)
+            for (int i = 1; i <= total; i++)
             {
                 int tempMax = 0;
 
                 //count[n] = max(count[n-s[j]])+1  when 1<=j<=numberOfDenominations && n>=s[j]
-                for (int j=0;j<numberOfDenominations && denominations[j]<=i;j++)
+                for (int j = 0; j < numberOfDenominations && denominations[j] <= i; j++)
                 {
                     if (tempMax <= countArray[i - denominations[j]])
                         tempMax = countArray[i - denominations[j]] + 1;
@@ -92,7 +92,7 @@ namespace Project2016.DP
             int[] denom = { 2, 5, 3, 6 };
             int total = 10;
             int count = CoinCount(denom, total);
-            denom =new int[] { 1,2,3};
+            denom = new int[] { 1, 2, 3 };
             total = 4;
             count = CoinCount(denom, total);
             return 0;
@@ -179,7 +179,7 @@ namespace Project2016.DP
                 if (currentSum < 0) //
                 {
                     currentSum = 0;
-                    
+
                 }
                 else
                 {
@@ -191,5 +191,48 @@ namespace Project2016.DP
             return maxSum;
 
         }
+
+
+        //Given a sequence of matrices, find the most efficient way to multiply these matrices together. The problem is 
+        //not actually to perform the multiplications, but merely to decide in which order to perform the multiplications.
+        int MatrixChainOrder(int[] p)
+        {
+            int matrixNumber = p.Length;
+            if (matrixNumber <= 1)
+                return 0;
+            if (matrixNumber == 2)
+                return p[0] * p[1] * p[2];
+
+            int[,] matrixComplexity = new int[matrixNumber, matrixNumber];
+
+
+            //create the base
+            for (int i = 1; i < matrixNumber; i++)
+            {
+                matrixComplexity[i, i] = 0;  // only the current matrix
+                matrixComplexity[i, i + 1] = p[i - 1] * p[i] * p[i + 1];
+
+            }
+
+            int currentComplextity = int.MaxValue;
+            int minComplexity = int.MaxValue;
+            //the matrix number now is at least 3, as otherwise it's already taken care of above
+            for (int gap = 2; gap < matrixNumber - 1; gap++)
+            {
+                for (int startMatrix = 1; startMatrix < matrixNumber - gap; startMatrix++)
+                {
+                    for (int movingIndex = startMatrix; movingIndex < startMatrix + gap; movingIndex++)
+                    {
+                        currentComplextity = matrixComplexity[startMatrix, movingIndex]
+                            + matrixComplexity[movingIndex + 1, startMatrix + gap]
+                            + p[startMatrix - 1] * p[movingIndex] * p[startMatrix + gap];
+                        if (currentComplextity < minComplexity)
+                            minComplexity = currentComplextity;
+                    }
+                }
+            }
+
+            return minComplexity;
+        }
     }
-}
+    }
