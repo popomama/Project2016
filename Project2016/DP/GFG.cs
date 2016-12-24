@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Project2016.DP
 {
-    class GFG
+    public class GFG
     {
+
+        public GFG()
+        { }
         //Coin Change
         //Given a value N, if we want to make change for N cents, and we have infinite supply of each of 
         //S = { S1, S2, .. , Sm} valued coins, how many ways can we make the change? The order of coins doesn’t matter.
@@ -195,15 +198,15 @@ namespace Project2016.DP
 
         //Given a sequence of matrices, find the most efficient way to multiply these matrices together. The problem is 
         //not actually to perform the multiplications, but merely to decide in which order to perform the multiplications.
-        int MatrixChainOrder(int[] p)
+        public int MatrixChainOrder(int[] p)
         {
-            int matrixNumber = p.Length;
+            int matrixNumber = p.Length-1;
             if (matrixNumber <= 1)
                 return 0;
             if (matrixNumber == 2)
                 return p[0] * p[1] * p[2];
 
-            int[,] matrixComplexity = new int[matrixNumber, matrixNumber];
+            int[,] matrixComplexity = new int[matrixNumber+1, matrixNumber+1];
 
 
             //create the base
@@ -214,25 +217,31 @@ namespace Project2016.DP
 
             }
 
-            int currentComplextity = int.MaxValue;
+            int currentComplextity;
             int minComplexity = int.MaxValue;
             //the matrix number now is at least 3, as otherwise it's already taken care of above
-            for (int gap = 2; gap < matrixNumber - 1; gap++)
+            for (int gap = 2; gap < matrixNumber ; gap++) // loop matrixComplexity[x, x+gap] until matrixComplexity[1,matrixNumber]
             {
-                for (int startMatrix = 1; startMatrix < matrixNumber - gap; startMatrix++)
+                for (int startMatrix = 1; startMatrix <= matrixNumber - gap; startMatrix++)
                 {
+                    minComplexity = int.MaxValue;
                     for (int movingIndex = startMatrix; movingIndex < startMatrix + gap; movingIndex++)
                     {
+                        //matrixComplexity[i,k] = min(matrixComplexity[i,j]+matrixComplexity[j+1,k]+p[i-1]*p{i]*p[k])  
+                        // i<=j<k
+
                         currentComplextity = matrixComplexity[startMatrix, movingIndex]
                             + matrixComplexity[movingIndex + 1, startMatrix + gap]
                             + p[startMatrix - 1] * p[movingIndex] * p[startMatrix + gap];
                         if (currentComplextity < minComplexity)
                             minComplexity = currentComplextity;
                     }
+                    matrixComplexity[startMatrix, startMatrix + gap] = minComplexity;
+
                 }
             }
 
-            return minComplexity;
+            return matrixComplexity[1,matrixNumber];
         }
     }
     }

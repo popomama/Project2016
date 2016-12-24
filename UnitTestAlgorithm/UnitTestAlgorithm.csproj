@@ -53,6 +53,12 @@
     <Compile Include="AlgorithmTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Project2016\Project2016.csproj">
+      <Project>{524b11fe-5ae9-492d-b119-f1319a29d908}</Project>
+      <Name>Project2016</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
