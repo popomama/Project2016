@@ -24,13 +24,44 @@ namespace Project2016.Helpers
         }
     }
 
-    class Node<T>
+    public class Node<T>
     {
         public T Value;
         public Node<T> Next;
 
         public Node(T v)
         { Value=v; }
+
+
+        public static Node<int> BuildIntList(int num, int range)
+        {
+            if (num < 1)
+                return null;
+
+            Random r = new Random();
+            Node<int> head = new Node<int>(r.Next(range));
+            Node<int> nd = head;
+
+            for (int i = 0; i < num; i++)
+            {
+                nd.Next = new Node<int>(r.Next(range));
+                nd = nd.Next;
+
+            }
+
+            return head;
+        }
+
+        public static  void PrintNodeList(Node<T> nd)
+        {
+            while (nd != null)
+            {
+                Console.Write(nd.Value + " -> ");
+                nd = nd.Next;
+            }
+
+            Console.WriteLine();
+        }
 
     }
 

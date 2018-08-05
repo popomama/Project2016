@@ -58,6 +58,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortingSeraching\CodeCrack_SortingSearching.cs" />
+    <Compile Include="SortingSeraching\Sort1.cs" />
+    <Compile Include="SortingSeraching\TestSort.cs" />
     <Compile Include="TreeGraph\CrackCode_TreeGraph.cs" />
     <Compile Include="TreeGraph\GeneralAlg.cs" />
     <Compile Include="TreeGraph\TestTreeGraph.cs" />

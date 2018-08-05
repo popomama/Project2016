@@ -5,6 +5,7 @@ using Project2016.LinkedList;
 using Project2016.Array;
 using Project2016.TreeGraph;
 using Project2016.Helpers;
+using Project2016.SortingSeraching;
 using System.IO.Compression;
 using Project2016.DP;
 
@@ -24,12 +25,21 @@ namespace Project2016
             //TestHelper.TestHeap();
             // GFG gfg = new GFG();
             //gfg.TestCoinCount();
-            TestArray.testMisc_Array_FindPermutation();
+            //TestArray.testMisc_Array_FindPermutation();
+            TestSort.TestSortLinkedList();
+            
 
 
         }
 
-       
+        public static void PrintNodeListTest()
+        {
+
+            Node<int> nd = Node<int>.BuildIntList(10, 100);
+            Node<int>.PrintNodeList(nd);
+
+        }
+
         private static void testzip()
         {
             //throw new NotImplementedException();
