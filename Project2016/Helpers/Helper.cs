@@ -24,6 +24,20 @@ namespace Project2016.Helpers
         }
     }
 
+    public class MyRandom
+    {
+        static Random r;
+        static MyRandom()
+        {
+            r = new Random();
+        }
+
+        public static Random GetRandom()
+        {
+            return r;
+        }
+    }
+
     public class Node<T>
     {
         public T Value;
@@ -38,7 +52,8 @@ namespace Project2016.Helpers
             if (num < 1)
                 return null;
 
-            Random r = new Random();
+            //Random r = new Random();
+            Random r = MyRandom.GetRandom();
             Node<int> head = new Node<int>(r.Next(range));
             Node<int> nd = head;
 

@@ -26,7 +26,8 @@ namespace Project2016
             // GFG gfg = new GFG();
             //gfg.TestCoinCount();
             //TestArray.testMisc_Array_FindPermutation();
-            TestSort.TestSortLinkedList();
+//            TestSort.TestSortLinkedList();
+            TestSort.TestKLinkedList();
             
 
 

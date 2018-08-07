@@ -83,10 +83,42 @@ namespace Project2016.SortingSeraching
             return ndDummy.Next;
         }
 
+        //Merge k sorted linked lists and return it as one sorted list.
+        //Analyze and describe its complexity.
+        //we use devide and conquer.
+        //Assuming there are N elements in each sorted array, then the complexity is O(N KlogK) and use O(1) space
+        //Alternatively, we can also use Heap(creating a heap with K node, each time when removing a node,we move the node to the
+        //next in the current. It taks O(N KlogK), but takes O(N) space
+        public Node<int> MergeKSortedList(List<Node<int>> nodeList)
+        {
+            int size = nodeList.Count;
+            if (size == 0)
+                return null;
+            if (size == 1)
+                return nodeList[0];
+            int mid = size / 2;
 
-        //Node<int> nd1 = Node<int>.BuildIntList(5, 100);
-        //Node<int> nd2 = Node<int>.BuildIntList(5, 100);
+            Node<int> firstHalf = MergeKSortedListHelper(nodeList, 0, mid);
+            Node<int> secondhalf = MergeKSortedListHelper(nodeList, mid+1, size-1);
+
+            Node<int> finalList =MergeList(firstHalf, secondhalf);
+            return finalList;
+        }
+
+        private Node<int> MergeKSortedListHelper(List<Node<int>> nodeList, int start, int end)
+        {
+            if (start > end)
+                return null;
+            if (start == end)
+                return nodeList[start] ;
+            int mid = (start + end) / 2;
+
+            Node<int> firstHalf = MergeKSortedListHelper(nodeList, start, mid);
+            Node<int> secondhalf = MergeKSortedListHelper(nodeList, mid + 1, end);
+
+            return MergeList(firstHalf, secondhalf);
 
 
+        }
     }
 }
