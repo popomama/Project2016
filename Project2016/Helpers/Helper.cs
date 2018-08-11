@@ -54,12 +54,12 @@ namespace Project2016.Helpers
 
             //Random r = new Random();
             Random r = MyRandom.GetRandom();
-            Node<int> head = new Node<int>(r.Next(range));
+            Node<int> head = new Node<int>(r.Next(1,range));
             Node<int> nd = head;
 
             for (int i = 0; i < num; i++)
             {
-                nd.Next = new Node<int>(r.Next(range));
+                nd.Next = new Node<int>(r.Next(1, range));
                 nd = nd.Next;
 
             }

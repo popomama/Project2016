@@ -55,5 +55,22 @@ namespace Project2016.LinkedList
             l1.head = tempNode;
             l1.printList();
         }
+
+        public static void test_CC_AddTwoLL()
+        {
+            CodeCrack_LL ccLL = new CodeCrack_LL();
+
+            Node<int> nd1= Node<int>.BuildIntList(2, 8);
+            Node<int>.PrintNodeList(nd1);
+            Node<int> nd2 = Node<int>.BuildIntList(3, 8);
+            Node<int>.PrintNodeList(nd2);
+
+            Node<int> result = ccLL.AddTwoLL(nd1, nd2);
+            Node<int>.PrintNodeList(result);
+
+
+
+
+        }
     }
 }

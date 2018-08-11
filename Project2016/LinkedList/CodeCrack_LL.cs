@@ -143,5 +143,96 @@ namespace Project2016.LinkedList
 
             return length;
         }
+
+        //You have two numbers represented by a linked list, where each node
+        //contains a single digit.The digits are stored in forward order, such that the 1's
+        //digit is at the head of the list.Write a function that adds the two numbers and
+        //returns the sum as a linked list.
+        //Example:
+        //Given 6->1->7 + 2->9->5. That is, 617 + 295.
+        //Return 9->1->2. That is, 912.
+        public Node<int> AddTwoLL(Node<int> nd1, Node<int> nd2)
+        {
+            Node<int> result = new Node<int>(-1);
+            Node<int> prev=null;
+
+            nd1 = ReverseNodeList(nd1);
+            nd2 = ReverseNodeList(nd2);
+
+            int carry = 0;
+            int val;
+            Node<int> current=null;
+            while (nd1 != null && nd2!=null)
+            {
+                val = nd1.Value + nd2.Value + carry;
+                carry = val / 10;
+                val = val % 10;
+                current = new Node<int>(val);
+                current.Next = prev;
+                prev = current;
+
+                nd1 = nd1.Next;
+                nd2 = nd2.Next;
+
+            }
+
+            //between nd1 and nd2, at least one is null;
+            Node<int> nd=null;
+            if (nd1 == null)
+                nd = nd2;
+            else
+                nd = nd1;
+
+
+            if (current != null)//we have added some bits from low to high
+            {
+                while (nd != null)
+                {
+                    val = nd.Value+carry;
+                    carry = val / 10;
+                    val = val % 10;
+                    prev = current;
+
+                    current = new Node<int>(val);
+                    current.Next = prev ;
+//                    current = current.Next;
+
+                    nd = nd.Next;
+                }
+
+                if(carry!=0)
+                {
+                    nd = new Node<int>(1);
+                    nd.Next = current;
+                    current = nd;
+                    //current = current.Next;
+                }
+
+                result = current;
+            }
+            else//one of the original list is empty
+                result = ReverseNodeList(nd);
+
+            return result;
+        }
+
+        //reverse the linked list
+        Node<int> ReverseNodeList(Node<int> nd)
+        {
+            Node<int> current = nd;
+            Node<int> pre = null, next; 
+
+            while(current!=null)
+            {
+                next = current.Next;
+                current.Next = pre;
+                pre = current;
+                current = next;
+            }
+
+            return pre;
+        }
+
+
     }
 }
