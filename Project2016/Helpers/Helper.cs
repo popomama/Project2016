@@ -373,15 +373,17 @@ namespace Project2016.Helpers
         }
 
     }
-    //MiniHeap
+    // Min-Heap
     //3 operations: Insert(percolate up), DeletreMin(percolate down), CreateHeap
     // On Average it takes 2.67 comparision to do an Insert, but worst case is O(LogN)
     //Other Operations: DecreaseKey(p, delta) at position p, IncreaseKey(p, delta) at position p, removeKet(p) at position p
     class Heap
     {
-        int capacity; // the capacity of the heap
-        int count;  // current size, count can't exceed capacity
+        public int capacity; // the capacity of the heap
+        public int count;  // current size, count can't exceed capacity
        public int[] Items;
+
+//        public int top;
 
         public Heap(int capacity=10)    // set the default capacity value to 10
         {
@@ -389,6 +391,11 @@ namespace Project2016.Helpers
             Items = new int[capacity];
             count = 0;
 
+        }
+
+        public int Top()
+        {
+            return Items[0];
         }
 
         // add new number to the heap
@@ -436,17 +443,19 @@ namespace Project2016.Helpers
 //            int temp;
             while (currentIndex * 2 + 1 <= count - 1)// only loop until the current node is a leaf
             {
-                if(count == 2*currentIndex+1)// the current node only has left child, but no right child, 
+                if(count-1 == 2*currentIndex+1)// the current node only has left child, but no right child, 
                 {
-                    if(Items[currentIndex]<=Items[currentIndex*2+1]) // if the current node is smaller than its left child, swap the value
+                    if(Items[currentIndex]>Items[currentIndex*2+1]) // if the current node is greater than its left child, swap the value
                     {
                         Helper.swap(Items, currentIndex, currentIndex * 2 + 1);
                         //temp = Items[currentIndex * 2 + 1];
                         //Items[currentIndex * 2 + 1] = Items[currentIndex];
                         //Items[currentIndex] = temp;
-
+                        //return;
                     }
-                    //since the current child has no right child, after swap, it's already leaf, we stop here.                    
+
+                    //since the current child has no right child, after swap, it's already leaf, we stop here.        
+                    return;
                 }
                 else//the current node has both left and right child
                 {
@@ -479,7 +488,7 @@ namespace Project2016.Helpers
         {
             while(currentIndex>0) //keep looping until it reaches the root;
             {
-                if (Items[currentIndex] < Items[(currentIndex - 1) / 2])//only need to move up if the current node > its parent
+                if (Items[currentIndex] < Items[(currentIndex - 1) / 2])//only need to move up if the current node < its parent
                 {
                     Helper.swap(Items, currentIndex, (currentIndex - 1) / 2);
                     currentIndex = (currentIndex - 1) / 2; // reset the currentIndex to its parent

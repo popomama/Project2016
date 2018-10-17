@@ -22,14 +22,14 @@ namespace Project2016
             //TestLL.test_CC_v6_2_4_Partition();
             //TestTreeGraph.Test_CC_V6_47_BuildOrder_All();
 
-            //TestHelper.TestHeap();
+            TestHelper.TestHeap();
             // GFG gfg = new GFG();
             //gfg.TestCoinCount();
             //TestArray.testMisc_Array_FindPermutation();
             //            TestSort.TestSortLinkedList();
             // TestSort.TestKLinkedList();
-            TestLL.test_CC_AddTwoLL();
-
+            // TestLL.test_CC_AddTwoLL();
+            //TestArray.testMedianFromSortedArray();
 
         }
 

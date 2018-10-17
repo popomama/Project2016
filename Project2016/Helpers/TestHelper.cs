@@ -12,19 +12,20 @@ namespace Project2016.Helpers
         public static void TestHeap()
         {
             int currentVal;
-            Heap h = new Heap(16);
-            Random r = new Random(1000);
-            for (int i = 0; i < 10; i++)
+            Heap h = new Heap(15);
+            Random r = new Random(123);
+            int num = 15;
+            for (int i = 0; i < num; i++)
             {
                 currentVal = r.Next(100);
                 h.insert(currentVal);
             }
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < num; i++)
                 Console.Write(h.Items[i] + "->");
             Console.WriteLine();
 
-            for(int i=0;i<10;i++)
+            for(int i=0;i<num;i++)
             {
                 currentVal = h.deleteMin();
                 Console.Write(currentVal + "->");

@@ -97,6 +97,46 @@ namespace Project2016.Array
 
         }
 
-        
+        //There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays. 
+        //The overall run time complexity should be O(log (m+n)).
+        public int findMedianSortedArrays(int[] a, int[] b)
+        {
+            int lenA = a.Length;
+            int lenB = b.Length;
+
+            int total = lenA + lenB;
+
+            if (total % 2 == 0)//there are even number of elements, take the avg of the middle two;
+                return (FindKthFromTwo(a, 0, a.Length - 1, b, 0, b.Length - 1, total / 2) +
+                    FindKthFromTwo(a, 0, a.Length - 1, b, 0, b.Length - 1, total / 2 + 1) / 2);
+            else
+                return FindKthFromTwo(a, 0, a.Length - 1, b, 0, b.Length - 1, total / 2 + 1);
+
+        }
+
+        private int FindKthFromTwo(int[] a, int startA, int endA, int[] b, int startB, int endB, int position)
+        {
+            if (position < startA || position > endA)
+                return b[startB + position - 1];
+            if (position < startB || position > endB)
+                return a[startA + position - 1];
+
+            int halfA = position / 2;
+            int halfB = position - halfA;
+
+            if(a[startA+ halfA]<b[startB + halfB])// the elements between startA and startA+halfA must in the first position
+            {
+                return FindKthFromTwo(a, startA + halfA + 1, endA, b, startB, endB, position - halfA);
+            }
+
+            if(a[startA + halfA] > b[startB + halfB])// the elements between startB and startB+halfB must in the first position
+            {
+                return FindKthFromTwo(a, startA, endA, b, startB + halfB, endB, position - halfB);
+            }
+
+            //if a[startA+ halfA]==b[startB + halfB], return it;
+            return a[startA + halfA];
+
+        }
     }
 }

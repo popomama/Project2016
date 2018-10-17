@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Project2016.Helpers;
 
 namespace Project2016.Generalquestions
 {
@@ -73,6 +74,52 @@ namespace Project2016.Generalquestions
 
 
             return i; // return the pivot index;
+        }
+
+        //Median in a stream of integers(running integers)
+        //Given that integers are read from a data stream. Find median of elements read so for in efficient way.
+        //For simplicity assume there are no duplicates. 
+        //algorithm: use two heaps(1 max heap and 1 min heap), with size differing at most one. If the size of the two
+        //are same, the median = avg(top of the both heaps); otherwise median = top of the heap with bigger size.
+        int[] GetMedian(int[] org)
+        {
+            int size = org.Length;
+            Heap hLeft = new Heap(size); // we really only need size/2+1;
+            Heap hRight = new Heap(size);
+            
+            for(int i=0;i<size;i++)
+            {
+                int median = GetMedianHelper(org[i], hLeft, hRight);
+            }
+
+            return new int[0];
+        }
+
+        int GetMedianHelper(int newItem, Heap hLeft, Heap hRight)
+        {
+            int newMedian, currentMedian;
+            int hLeftCount = hLeft.count;
+            int hRightCount = hRight.count;
+
+            //both heaps are empty
+            if(hLeftCount ==0)
+            {
+                hLeft.insert(newItem);
+                newMedian = newItem;
+                return newMedian;
+            }
+
+            //only 
+            if(hRightCount ==0)
+            {
+
+            }
+
+            return 1;
+
+
+
+            
         }
     }
 }
