@@ -81,44 +81,109 @@ namespace Project2016.Generalquestions
         //For simplicity assume there are no duplicates. 
         //algorithm: use two heaps(1 max heap and 1 min heap), with size differing at most one. If the size of the two
         //are same, the median = avg(top of the both heaps); otherwise median = top of the heap with bigger size.
-        int[] GetMedian(int[] org)
+        public static int[] GetMedian(int[] org)
         {
             int size = org.Length;
-            Heap hLeft = new Heap(size); // we really only need size/2+1;
+            MaxHeap hLeft = new MaxHeap(size); // we really only need size/2+1;
             Heap hRight = new Heap(size);
-            
-            for(int i=0;i<size;i++)
+            int[] medianArr = new int[size];
+
+            if (size == 0)
+                throw new Exception("Empty array");
+
+            medianArr[0] = org[0];
+
+            if (size ==1)            
+                return medianArr;
+
+            if(size==2)
             {
-                int median = GetMedianHelper(org[i], hLeft, hRight);
+                medianArr[1] = (org[0] + org[1]) / 2;
+                return medianArr;
             }
 
-            return new int[0];
+            //initialize the hLeft(Max Heap) and hRight(minHeap)
+            if (org[0] > org[1])
+            {
+                hLeft.insert(org[1]);
+                hRight.insert(org[0]);
+            }
+            else
+            {
+                hLeft.insert(org[0]);
+                hRight.insert(org[1]);
+            }
+
+            medianArr[1] = (org[0] + org[1]) / 2;
+            for(int i=2;i<size;i++)
+            {
+                int median = GetMedianHelper(org[i], org[1], hLeft, hRight);
+                medianArr[i] = median;
+            }
+
+            return medianArr;
         }
 
-        int GetMedianHelper(int newItem, Heap hLeft, Heap hRight)
+        //hLeft is maxHeap and hRight is min Heap
+        //we keep the size difference between the hLeft and hRight within 1
+        public static int GetMedianHelper(int newItem, int currentMedian, MaxHeap hLeft, Heap hRight)
         {
-            int newMedian, currentMedian;
+            //
+            int newMedian;
             int hLeftCount = hLeft.count;
             int hRightCount = hRight.count;
-
-            //both heaps are empty
-            if(hLeftCount ==0)
+            int topLeft = hLeft.Top();
+            int topRight = hRight.Top();
+            if(hLeftCount<hRightCount)
             {
-                hLeft.insert(newItem);
-                newMedian = newItem;
-                return newMedian;
+                if(newItem<=topRight)
+                {
+                    hLeft.insert(newItem); //now HLeftCount = hRightCount;
+                    newMedian = (hLeft.Top() + topRight) / 2;
+                }
+                else
+                {
+                    //take the top(min) off the hRight, add it to hLEft;
+                    topRight = hRight.deleteMin();
+                    hLeft.insert(topRight);
+                    hRight.insert(newItem);//now HLeftCount = hRightCount;
+                    newMedian =(hLeft.Top() + hRight.Top())/2;
+                }
+
+            }
+            else if(hLeftCount==hRightCount)
+            {
+                if(newItem <=topRight)
+                {
+                    hLeft.insert(newItem);
+                    newMedian = hLeft.Top();
+                }
+                else
+                {
+                    hRight.insert(newItem);
+                    newMedian = hRight.Top();
+                }
+            }
+            else//hLeftCount > hRightCount
+            {
+                if(newItem>=topLeft)
+                {
+                    hRight.insert(newItem);
+                    newMedian = (hLeft.Top() + hRight.Top()) / 2;
+                }
+                else
+                {
+                    hRight.insert(topLeft);
+                    hLeft.deleteMax();
+                    hLeft.insert(newItem);
+                    newMedian = (hLeft.Top() + hRight.Top()) / 2;
+                }
+
             }
 
-            //only 
-            if(hRightCount ==0)
-            {
+            return newMedian;
 
-            }
-
-            return 1;
-
-
-
+            
             
         }
     }

@@ -8,6 +8,7 @@ using Project2016.Helpers;
 using Project2016.SortingSeraching;
 using System.IO.Compression;
 using Project2016.DP;
+using Project2016.Generalquestions;
 
 
 
@@ -21,8 +22,9 @@ namespace Project2016
             // TestArray.testCC_Array_CCV6_IsPalindromePermutation();
             //TestLL.test_CC_v6_2_4_Partition();
             //TestTreeGraph.Test_CC_V6_47_BuildOrder_All();
+            TestGetMedian();
+           // TestHelper.TestHeap();
 
-            TestHelper.TestHeap();
             // GFG gfg = new GFG();
             //gfg.TestCoinCount();
             //TestArray.testMisc_Array_FindPermutation();
@@ -33,6 +35,19 @@ namespace Project2016
 
         }
 
+        public static void TestGetMedian()
+        {
+            int size = 10;
+            int[] arr = new int[size];
+            Random r = new Random();
+            for(int i=0;i<size;i++)
+            {
+                arr[i] = r.Next(100);
+
+            }
+            int[] medianArr = Google1.GetMedian(arr);
+
+        }
         public static void PrintNodeListTest()
         {
 

@@ -373,6 +373,7 @@ namespace Project2016.Helpers
         }
 
     }
+    
     // Min-Heap
     //3 operations: Insert(percolate up), DeletreMin(percolate down), CreateHeap
     // On Average it takes 2.67 comparision to do an Insert, but worst case is O(LogN)
@@ -499,6 +500,132 @@ namespace Project2016.Helpers
         }
 
         
+    }
+
+
+
+    class MaxHeap
+    {
+        public int capacity; // the capacity of the heap
+        public int count;  // current size, count can't exceed capacity
+        public int[] Items;
+
+        //        public int top;
+
+        public MaxHeap(int capacity = 10)    // set the default capacity value to 10
+        {
+            this.capacity = capacity;
+            Items = new int[capacity];
+            count = 0;
+
+        }
+
+        public int Top()
+        {
+            return Items[0];
+        }
+
+        // add new number to the heap
+        public void insert(int value)
+        {
+            if (capacity == count)
+                return; //the capacity is full, can't add new item;
+            else
+            {
+                Items[count] = value;  // add the value to the last element
+                count++;    // increase the count
+                BubbleUp(count - 1);      // Bublle up the last value
+
+            }
+
+        }
+
+        //take the minimum value off the heap
+        public int deleteMax()
+        {
+            if (count == 0)
+                throw new Exception("no value to delete");
+
+            int maxValue = Items[0];
+
+            if (count > 1)
+
+            {
+                Items[0] = Items[count - 1]; //move the last to the root
+                count--; //redcue the count #
+
+                TrippleDown(0);
+            }
+            else // the heap is empty after the minimum is taken off
+                count--;
+
+            return maxValue;
+
+        }
+
+
+
+        private void TrippleDown(int currentIndex)
+        {
+            //            int temp;
+            while (currentIndex * 2 + 1 <= count - 1)// only loop until the current node is a leaf
+            {
+                if (count - 1 == 2 * currentIndex + 1)// the current node only has left child, but no right child, 
+                {
+                    if (Items[currentIndex] < Items[currentIndex * 2 + 1]) // if the current node is less than its left child, swap the value
+                    {
+                        Helper.swap(Items, currentIndex, currentIndex * 2 + 1);
+                        //temp = Items[currentIndex * 2 + 1];
+                        //Items[currentIndex * 2 + 1] = Items[currentIndex];
+                        //Items[currentIndex] = temp;
+                        //return;
+                    }
+
+                    //since the current child has no right child, after swap, it's already leaf, we stop here.        
+                    return;
+                }
+                else//the current node has both left and right child
+                {
+                    if ((Items[currentIndex] >= Items[currentIndex * 2 + 1]) && (Items[currentIndex] >= Items[currentIndex * 2 + 2]))
+                        return;
+                    else
+                    {
+                        if (Items[currentIndex * 2 + 1] > Items[currentIndex * 2 + 2]) // if left>right, swap current with left
+                        {
+                            Helper.swap(Items, currentIndex, currentIndex * 2 + 1);
+
+                            //temp = Items[currentIndex * 2 + 1];
+                            //Items[currentIndex * 2 + 1] = Items[currentIndex];
+                            //Items[currentIndex] = temp;
+                            currentIndex = currentIndex * 2 + 1; // reset the current index
+                        }
+                        else// if left<right, swap current with right
+                        {
+                            Helper.swap(Items, currentIndex, currentIndex * 2 + 2);
+                            //temp = Items[currentIndex * 2 + 2];
+                            //Items[currentIndex * 2 + 2] = Items[currentIndex];
+                            //Items[currentIndex] = temp;
+                            currentIndex = currentIndex * 2 + 2; //reset the current index;
+                        }
+                    }
+                }
+            }
+        }
+        private void BubbleUp(int currentIndex)
+        {
+            while (currentIndex > 0) //keep looping until it reaches the root;
+            {
+                if (Items[currentIndex] > Items[(currentIndex - 1) / 2])//only need to move up if the current node > its parent
+                {
+                    Helper.swap(Items, currentIndex, (currentIndex - 1) / 2);
+                    currentIndex = (currentIndex - 1) / 2; // reset the currentIndex to its parent
+                }
+                else
+                    return; //otherwise, we can return
+            }
+        }
+
+
     }
 
 }

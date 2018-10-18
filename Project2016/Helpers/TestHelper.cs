@@ -13,8 +13,8 @@ namespace Project2016.Helpers
         {
             int currentVal;
             Heap h = new Heap(15);
-            Random r = new Random(123);
-            int num = 15;
+            Random r = new Random();
+            int num = 12;
             for (int i = 0; i < num; i++)
             {
                 currentVal = r.Next(100);
