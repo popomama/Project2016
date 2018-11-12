@@ -244,4 +244,41 @@ namespace Project2016.DP
             return matrixComplexity[1,matrixNumber];
         }
     }
+
+    public class CoinLine
+    {
+
+        //There are n coins in a line. (Assume n is even). Two players take turns to take a coin from one of the ends 
+        //of the line until there are no more coins left.The player with the larger amount of money wins.
+        //Would you rather go first or second? Does it matter?
+        //Assume that you go first, describe an algorithm to compute the maximum amount of money you can win.
+        public static int FindCoinLine(int[] arr)
+        {
+
+            int num = arr.Length;
+            int[,] SumArr = new int[num, num];
+            int a, b, c;
+            int p1, p2;
+
+            for(int i=0;i<num;i++)
+               SumArr[i,i]= arr[i];
+
+            for (int gap = 1; gap < num; gap = gap + 2)
+                for (int i = 0, j = gap; i + gap < num; i++, j++)
+                {
+                    a = i + 2 < j ? SumArr[i + 2, j] : 0;
+                    b = i + 1 < j - 1 ? SumArr[i + 1, j - 1] : 0;
+                    c = i < j - 2 ? SumArr[i, j - 2] : 0;
+                    p1 = arr[i] + Math.Min(a, b);
+                    p2 = arr[j] + Math.Min(b, c);
+                    SumArr[i,j]=Math.Max(p1,p2);
+
+                }
+
+            return SumArr[0, num - 1];
+        }
     }
+        
+}
+
+

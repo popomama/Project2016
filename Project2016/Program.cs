@@ -22,9 +22,9 @@ namespace Project2016
             // TestArray.testCC_Array_CCV6_IsPalindromePermutation();
             //TestLL.test_CC_v6_2_4_Partition();
             //TestTreeGraph.Test_CC_V6_47_BuildOrder_All();
-            TestGetMedian();
-           // TestHelper.TestHeap();
-
+            //TestGetMedian();
+            // TestHelper.TestHeap();
+            TestCoin();
             // GFG gfg = new GFG();
             //gfg.TestCoinCount();
             //TestArray.testMisc_Array_FindPermutation();
@@ -35,6 +35,14 @@ namespace Project2016
 
         }
 
+        public static void TestCoin()
+        {
+            //int[] arr = { 8, 15, 3, 7 };
+
+            int[] arr={ 20, 30, 2, 2, 2, 10 };
+            int[] arr2 = { 3, 2, 2, 3, 1, 2 };
+            int max = DP.CoinLine.FindCoinLine(arr2);
+        }
         public static void TestGetMedian()
         {
             int size = 10;

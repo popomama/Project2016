@@ -227,7 +227,7 @@ namespace Project2016.Helpers
 
     }
 
-    //this is a generic heap, each item has a <key,value> pair
+    //this is a generic Minheap, each item has a <key,value> pair
     class HeapG
     {
         public int capacity; // the capacity of the heap
@@ -241,6 +241,8 @@ namespace Project2016.Helpers
             items = new KeyValuePair<int, double>[capacity];
             count = 0;
             itemPositions = new int[capacity];
+            for (int i = 0; i < capacity; i++)
+                itemPositions[i] = -1;//initialize to -1
 
         }
 
@@ -264,7 +266,7 @@ namespace Project2016.Helpers
         {
             while (currentIndex > 0) //keep looping until it reaches the root;
             {
-                if (items[currentIndex].Value < items[(currentIndex - 1) / 2].Value)//only need to move up if the current node > its parent
+                if (items[currentIndex].Value < items[(currentIndex - 1) / 2].Value)//only need to move up if the current node < its parent
                 {
                     Helper.swap(items, currentIndex, (currentIndex - 1) / 2);
                     itemPositions[items[currentIndex].Key] = currentIndex;
@@ -306,7 +308,7 @@ namespace Project2016.Helpers
         public bool IsInisdeHeap(int key)
         {
             int pos = itemPositions[key];
-            if (pos < count)
+            if (pos < count && pos>0)
                 return true;
 
             return false;
